@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <link rel="stylesheet" href="style.css">
+ 
+
+    <link rel="icon" type="image/png" href="Siyahlogo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+        <title>Yılan Oyunu</title>
+    
+    
+         
+    <header>
+        
+        <nav>
+            <ul>
+            <a href="index.html" class="buton-link">
+                 Ana Sayfa
+            <a href="projeler.html" class="buton-link">
+                Oyunlar
+
+
+</a>
+        </nav>
+    </header>
+</ul>
+
+    <style>
+        
+        body {
+            text-align: center; /* İçerideki her şeyi yatayda ortalar */
+            font-family: Arial, sans-serif;
+            padding-top: 50 px; /* Üstten biraz boşluk (opsiyonel) */
+             
+            
+        }
+        .buton-link {
+            
+            display: inline-block;
+            padding: 12px 24px; /* Butonun iç boşluğu */
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            color: blue; /* Yazı rengi */
+            background-color: none; /* Mavi arka plan */
+            text-decoration: none; /* Linkin altındaki çizgiyi kaldırır */
+            border-radius: 5px; /* Kenarları yuvarlatır */
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: var(--text-color); text-decoration: none; letter-spacing: 2px; padding-bottom: 5px; border-bottom: 2px solid transparent; transition: all 0.3s ease; cursor: pointer;
+            list-style: none; display: flex; gap: 2rem;
+            text-align: right;
+            background-color: transparent;
+             padding-top: 50 px; /* Üstten biraz boşluk (opsiyonel) */
+            
+
+        }
+
+        .buton-link:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); 
+        text-align: right;}
+        
+        
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0a0a14;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            touch-action: none; /* Mobilde sayfa kaydırmayı engeller */
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            padding-top: 30px; 
+        }
+
+        canvas {
+            background-color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            border: 2px solid #333;
+            display: block;
+        }
+
+        .score-board {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .controls-hint {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Yılan Oyunu</h2>
+    <div class="score-board">Skor: <span id="score">0</span></div>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div class="controls-hint">PC: Yön Tuşları | Mobil: Kaydır (Swipe)</div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Oyun Ayarları
+        let speed = 7; // Hız (Daha yüksek daha hızlı)
+        let tileCount = 20; // Izgara sayısı (20x20)
+        let tileSize = canvas.width / tileCount - 2; // Her karenin boyutu
+        
+        // Yılanın Başlangıç Konumu
+        let headX = 10;
+        let headY = 10;
+        const snakeParts = [];
+        let tailLength = 2;
+
+        // Yem Konumu
+        let appleX = 5;
+        let appleY = 5;
+
+        // Hareket Yönü (X ve Y hızı)
+        let xVelocity = 0;
+        let yVelocity = 0;
+
+        let score = 0;
+
+        // Oyun Döngüsü
+        function drawGame() {
+            changeSnakePosition();
+            let result = isGameOver();
+            if (result) {
+                return;
+            }
+
+            clearScreen();
+            checkAppleCollision();
+            drawApple();
+            drawSnake();
+            drawScore();
+            
+            setTimeout(drawGame, 1000 / speed);
+        }
+
+        function isGameOver() {
+            let gameOver = false;
+
+            // Duvarlara çarpma kontrolü (İsteğe bağlı: duvarlardan geçmek istersen burayı sil)
+            if (headX < 0 || headX >= tileCount || headY < 0 || headY >= tileCount) {
+                gameOver = true;
+            }
+
+            // Kendine çarpma kontrolü
+            if (xVelocity === 0 && yVelocity === 0) {
+                return false;
+            }
+
+            for (let i = 0; i < snakeParts.length; i++) {
+                let part = snakeParts[i];
+                if (part.x === headX && part.y === headY) {
+                    gameOver = true;
+                    break;
+                }
+            }
+
+            if (gameOver) {
+                ctx.fillStyle = "white";
+                ctx.font = "50px Verdana";
+                // Metni ortalamak için
+                ctx.fillText("Oyun Bitti!", canvas.width / 6.5, canvas.height / 2);
+                
+                // Yeniden başlatmak için tıkla/tuşa bas mekaniği eklenebilir
+                // Şimdilik sayfayı yenilemek en kolayı:
+                setTimeout(() => location.reload(), 2000); 
+            }
+
+            return gameOver;
+        }
+
+        function drawScore() {
+            document.getElementById("score").innerText = score;
+        }
+
+        function clearScreen() {
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawSnake() {
+            ctx.fillStyle = "lime";
+            for (let i = 0; i < snakeParts.length; i++) {
+                let part = snakeParts[i];
+                ctx.fillRect(part.x * (canvas.width / tileCount), part.y * (canvas.height / tileCount), tileSize, tileSize);
+            }
+
+            snakeParts.push(new SnakePart(headX, headY));
+            while (snakeParts.length > tailLength) {
+                snakeParts.shift();
+            }
+
+            ctx.fillStyle = "orange"; // Baş kısmı farklı renk
+            ctx.fillRect(headX * (canvas.width / tileCount), headY * (canvas.height / tileCount), tileSize, tileSize);
+        }
+
+        function changeSnakePosition() {
+            headX = headX + xVelocity;
+            headY = headY + yVelocity;
+        }
+
+        function drawApple() {
+            ctx.fillStyle = "red";
+            ctx.fillRect(appleX * (canvas.width / tileCount), appleY * (canvas.height / tileCount), tileSize, tileSize);
+        }
+
+        function checkAppleCollision() {
+            if (appleX === headX && appleY === headY) {
+                appleX = Math.floor(Math.random() * tileCount);
+                appleY = Math.floor(Math.random() * tileCount);
+                tailLength++;
+                score++;
+                // Her 5 puanda bir hızlan
+                if(score % 5 === 0) speed++; 
+            }
+        }
+
+        class SnakePart {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        // --- KLAVYE KONTROLLERİ ---
+        document.body.addEventListener("keydown", keyDown);
+
+        function keyDown(event) {
+            // Yukarı
+            if (event.keyCode == 38) {
+                if (yVelocity == 1) return; // Geriye dönmeyi engelle
+                yVelocity = -1;
+                xVelocity = 0;
+            }
+            // Aşağı
+            if (event.keyCode == 40) {
+                if (yVelocity == -1) return;
+                yVelocity = 1;
+                xVelocity = 0;
+            }
+            // Sol
+            if (event.keyCode == 37) {
+                if (xVelocity == 1) return;
+                yVelocity = 0;
+                xVelocity = -1;
+            }
+            // Sağ
+            if (event.keyCode == 39) {
+                if (xVelocity == -1) return;
+                yVelocity = 0;
+                xVelocity = 1;
+            }
+        }
+
+        // --- MOBİL DOKUNMATİK (SWIPE) KONTROLLERİ ---
+        let xDown = null;
+        let yDown = null;
+
+        document.addEventListener('touchstart', handleTouchStart, false);
+        document.addEventListener('touchmove', handleTouchMove, false);
+
+        function handleTouchStart(evt) {
+            const firstTouch = evt.touches[0];
+            xDown = firstTouch.clientX;
+            yDown = firstTouch.clientY;
+        }
+
+        function handleTouchMove(evt) {
+            if (!xDown || !yDown) {
+                return;
+            }
+
+            let xUp = evt.touches[0].clientX;
+            let yUp = evt.touches[0].clientY;
+
+            let xDiff = xDown - xUp;
+            let yDiff = yDown - yUp;
+
+            // En belirgin hareket yönünü bul (yatay mı dikey mi?)
+            if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                if (xDiff > 0) {
+                    // Sola Kaydırma
+                    if (xVelocity == 1) return;
+                    yVelocity = 0;
+                    xVelocity = -1;
+                } else {
+                    // Sağa Kaydırma
+                    if (xVelocity == -1) return;
+                    yVelocity = 0;
+                    xVelocity = 1;
+                }
+            } else {
+                if (yDiff > 0) {
+                    // Yukarı Kaydırma
+                    if (yVelocity == 1) return;
+                    yVelocity = -1;
+                    xVelocity = 0;
+                } else {
+                    // Aşağı Kaydırma
+                    if (yVelocity == -1) return;
+                    yVelocity = 1;
+                    xVelocity = 0;
+                }
+            }
+            
+            // Değerleri sıfırla
+            xDown = null;
+            yDown = null;
+        }
+
+        // Oyunu Başlat
+        drawGame();
+    </script>
+</body>
+</html>

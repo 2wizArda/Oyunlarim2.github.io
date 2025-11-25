@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mustafa Arda Öztürk</title>
+
+    <link rel="icon" type="image/png" href="Siyahlogo.png">
+
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+            <a href="#" class="logo">Mustafa Arda</a>
+
+<a href="index.html" class="buton-link">
+    Ana Sayfa
+
+</a>
+                <body>
+
+
+
+    <a href="projeler.html" class="buton-link">
+        Oyunlara Git
+    </a>
+    
+
+</body>
+        </nav>    
+            </ul>
+
+            
+
+
+            <div id="hamburger-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="anasayfa" class="sayfa aktif">
+             <div class="hero">
+                <h1>YAZILIMIN GELECEĞİNE HOŞ GELDİN</h1>
+                <p>
+                    Ben Mustafa Arda Öztürk, Gelecekte Yazılım ve Yapay Zeka mühendisi olmak için çalışmlar yapıyorum bu web sitesinde bu çalışmalarımı paylaşıyorum
+                    <a href="https://www.instagram.com/mustafaarda.01" target="_blank" class="hero-link">Instagram</a> hesabından bana ulaşabilir ve soru sorabilirsiniz
+                </p>
+            </div>
+             <div class="iletisim">
+                <h3>BAĞLANTI KUR</h3>
+                <p><span>Instagram:</span> <a href="https://www.instagram.com/mustafaarda.01" target="_blank">Mustafa Arda</a></p>
+            </div>
+</div>    
+<style>
+
+        /* Bu CSS kodu, <a> etiketini
+          bir buton gibi gösterir.
+        */
+body {
+            text-align: center; /* İçerideki her şeyi yatayda ortalar */
+            font-family: Arial, sans-serif;
+            padding-top: 50 px; /* Üstten biraz boşluk (opsiyonel) */
+            
+        }
+        .buton-link {
+            
+            display: inline-block;
+            padding: 12px 24px; /* Butonun iç boşluğu */
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            color: white; /* Yazı rengi */
+            background-color: none; /* Mavi arka plan */
+            text-decoration: none; /* Linkin altındaki çizgiyi kaldırır */
+            border-radius: 5px; /* Kenarları yuvarlatır */
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: var(--text-color); text-decoration: none; letter-spacing: 2px; padding-bottom: 5px; border-bottom: 2px solid transparent; transition: all 0.3s ease; cursor: pointer;
+            list-style: none; display: flex; gap: 2rem;
+            text-align: right;
+            
+
+        }
+
+        .buton-link:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); 
+        text-align: right;}
+        
+        
+    </style>
+</head>
+          <div id = "art">
+            <img src="Siyahlogo.png">
+
+</div>
+        
+</div>
+        </section>
+        <section id="projeler" class="sayfa">
+            <h1>OYUNLAR</h1>
+            <div id="projeler-listesi" class="grid-container"></div>
+        </section>
+        <section id="kodlar" class="sayfa">
+            <h1>KOD ARŞİVİ</h1>
+            <div id="kodlar-listesi"></div>
+        </section>
+    </main>
+    
+
+    <div id="proje-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <div id="modal-images"></div>
+            <h3>GEREKLİ MALZEMELER</h3>
+            <ul id="modal-materials"></ul>
+            <h3>KODLAR</h3>
+            <div id="modal-codes"></div>
+        </div>
+    </div>
+
+    
+    <div id="demo-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="demo-modal-title"></h2>
+            <p class="demo-disclaimer">
+                <strong>Bilgilendirme:</strong> Bu demo, orijinal kodun mantığını ve çalışmasını tarayıcınızda deneyimleyebilmeniz için <strong>JavaScript ile yeniden oluşturulmuştur.</strong>
+            </p>
+            <div id="demo-modal-content"></div>
+        </div>
+    </div>
+
+     
+    <div class="ataturk-gif-container">
+        <img src="https://www.bing.com/th/id/OGC.3ec001b7c203e58e5852c645ac54927a?o=7&pid=1.7&rm=3&rurl=https%3a%2f%2fi.pinimg.com%2foriginals%2fd0%2fee%2f84%2fd0ee84ee31d941c8f37511621919adc5.gif&ehk=6lZoGJvZ1TuX0SCQkmSiP1sAlqzYrkEPJYzRsNykYsI%3d" alt="Atatürk ve Türk Bayrağı" id="ataturkGif">
+        
+        
+        <div id="hitabeContainer">
+            <div class="hitabe-content">
+                <h2>Gençliğe Hitabe</h2>
+                <p class="zafer-bayrami">Gazi Mustafa Kemal Atatürk'ün Türk gençliğine emaneti:</p>
+                
+<div class="hitabe-metin">
+                    <p>Ey Türk Gençliği!</p>
+                    <p>Birinci vazifen, Türk istiklâlini, Türk Cumhuriyetini, ilelebet, muhafaza ve müdafaa etmektir.</p>
+                    <p>Mevcudiyetinin ve istikbalinin yegâne temeli budur. Bu temel, senin, en kıymetli hazinendir. İstikbalde dahi, seni bu hazineden mahrum etmek isteyecek, dahilî ve haricî bedhahların olacaktır.</p>
+                    <p>Bir gün, İstiklâl ve Cumhuriyeti müdafaa mecburiyetine düşersen, vazifeye atılmak için, içinde bulunacağın vaziyetin imkân ve şeraitini düşünmeyeceksin! Bu imkân ve şerait, çok nâmüsait bir mahiyette tezahür edebilir. İstiklâl ve Cumhuriyetine kastedecek düşmanlar, bütün dünyada emsali görülmemiş bir galibiyetin mümessili olabilirler. Cebren ve hile ile aziz vatanın, bütün kaleleri zaptedilmiş, bütün tersanelerine girilmiş, bütün orduları dağıtılmış ve memleketin her köşesi bilfiil işgal edilmiş olabilir.</p>
+                    <p>Bütün bu şerâitten daha elîm ve daha vahim olmak üzere, memleketin dahilinde, iktidara sahip olanlar gaflet ve dalâlet ve hattâ hıyanet içinde bulunabilirler. Hattâ bu iktidar sahipleri şahsî menfaatlerini, müstevlilerin siyasi emelleriyle tevhit edebilirler. Millet, fakr ü zaruret içinde harap ve bîtap düşmüş olabilir.</p>
+                    <p>Ey Türk istikbalinin evlâdı! İşte, bu ahval ve şerâit içinde dahi, vazifen; Türk İstiklâl ve Cumhuriyetini kurtarmaktır!</p>
+                    <p><strong>Muhtaç olduğun kudret, damarlarındaki asil kanda mevcuttur!</strong></p>
+<div class="ataturk">
+    <img src="mustafa-kemal-ataturk.jpg" alt="ATATURK">
+
+    
+
+
+</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="script.js"></script>
+    
+
+</body>
+</html>
